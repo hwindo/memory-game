@@ -78,7 +78,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { Mode } from "../models/mode";
+import { Mode } from "../models/Konstants";
 
 @Component
 export default class Squares extends Vue {

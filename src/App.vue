@@ -34,7 +34,7 @@ import { Component, Vue } from "vue-property-decorator";
 import LaunchScreen from "./components/LaunchScreen.vue";
 import Squares from "./components/Squares.vue";
 import Actions from "./components/Actions.vue";
-import { Mode } from "./models/mode";
+import { Mode } from "./models/Konstants";
 
 @Component({
   components: {
