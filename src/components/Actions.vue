@@ -16,8 +16,11 @@
     </template>
     <template v-else-if="mode === actionState.answeringSquare">
       <div class="actions__instruction-text mb-2">
-        Click on the square you remember
+        Click on the {{ countHighlightedSquare }} square you remember
       </div>
+      <a href="#" :disabled="disableNextButton" @click="handleSquareCommit" class="btn btn-lg btn-success"
+        >Finish</a
+      >
     </template>
     <template v-else-if="mode === actionState.answeringWord">
       <div class="actions__instruction-text mb-2"></div>
@@ -58,11 +61,27 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { Mode } from "../Konstants";
+import { default as GameBrain, Game } from "../models/GameBrain";
 
 @Component
 export default class Actions extends Vue {
   actionState = Mode;
   @Prop() mode!: Mode;
+  @Prop() game!: Game;
+
+  get countHighlightedSquare(): number {
+    return this.game.highlightedSquares.length;
+  }
+
+  get disableNextButton(): boolean {
+    return (
+      GameBrain.selectedSquares.length >= this.game.highlightedSquares.length
+    );
+  }
+  handleSquareCommit() {
+    GameBrain.calculateSquare();
+    this.$emit('next');
+  }
 }
 </script>
 

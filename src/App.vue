@@ -14,12 +14,13 @@
         </div>
         <Squares
           :game="game"
-          :score="score"
           :mode="mode"
+          :score="score"
           v-on:answer-right="handleAnswerRight"
           v-on:answer-wrong="handleAnswerWrong"
         ></Squares>
         <Actions
+          :game="game"
           :mode="mode"
           v-on:next="handleNext"
           v-on:answer-right="handleAnswerRight"
@@ -48,15 +49,14 @@ import { Mode } from "./Konstants";
 export default class App extends Vue {
   mode = Mode.revealActives;
   appState = Mode;
-  gameNumber = 0;
   score = 0;
+  gameNumber = 0;
   launchScreen = true;
 
   mounted() {
     setTimeout(() => {
       this.launchScreen = false;
     }, 1618);
-    // window.GameBrain = this.GameBrain;
   }
 
   get game(): Game {
@@ -64,6 +64,7 @@ export default class App extends Vue {
   }
 
   handleNext(): void {
+    this.updateScore();
     switch (this.mode) {
       case this.appState.revealActives:
         this.mode = this.appState.showWord;
@@ -81,15 +82,9 @@ export default class App extends Vue {
         this.mode = this.appState.revealActives;
         break;
     }
-    console.log(this.mode);
-  }
-
-  addScore() {
-    this.score += 100;
   }
 
   handleAnswerRight() {
-    this.addScore();
     this.handleNext();
     console.log("Right Answer!");
   }
@@ -97,6 +92,10 @@ export default class App extends Vue {
   handleAnswerWrong() {
     this.handleNext();
     console.log("Wrong answer!");
+  }
+
+  updateScore() {
+    this.score = GameBrain.score;
   }
 }
 </script>
