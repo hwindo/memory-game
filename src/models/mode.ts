@@ -3,6 +3,6 @@ export enum Mode {
     showWord,
     answeringSquare,
     answeringWord,
-    rightMode,
-    wrongMode,
+    rightAnswer,
+    wrongAnswer,
 }

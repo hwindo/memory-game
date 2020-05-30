@@ -1,6 +1,6 @@
 <template>
   <div class="row actions text-center">
-    <template v-if="mode === 'revealActives'">
+    <template v-if="mode === actionState.revealActives">
       <div class="actions__instruction-text mb-2">
         Remember highlighted squares
       </div>
@@ -8,18 +8,18 @@
         >I'm Ready</a
       >
     </template>
-    <template v-else-if="mode === 'showWord'">
+    <template v-else-if="mode === actionState.showWord">
       <div class="actions__instruction-text mb-2">Remember word</div>
       <a href="#" @click="$emit('next')" class="btn btn-lg btn-outline-primary"
         >I Remember, Next</a
       >
     </template>
-    <template v-else-if="mode === 'answeringSquare'">
+    <template v-else-if="mode === actionState.answeringSquare">
       <div class="actions__instruction-text mb-2">
         Click on the square you remember
       </div>
     </template>
-    <template v-else-if="mode === 'answeringWord'">
+    <template v-else-if="mode === actionState.answeringWord">
       <div class="actions__instruction-text mb-2"></div>
       <a
         href="#"
@@ -46,7 +46,7 @@
         >KUM</a
       >
     </template>
-    <template v-else-if="mode === 'rightAnswer'">
+    <template v-else-if="mode === actionState.rightAnswer">
       <div class="actions__instruction-text mb-2">Let's Play Again</div>
       <a href="#" @click="$emit('next')" class="btn btn-lg btn-outline-primary"
         >Play Again</a
@@ -57,10 +57,12 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import { Mode } from "../models/mode";
 
 @Component
 export default class Actions extends Vue {
-  @Prop() mode!: string;
+  actionState = Mode;
+  @Prop() mode!: Mode;
 }
 </script>
 

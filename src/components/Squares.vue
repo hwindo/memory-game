@@ -1,6 +1,6 @@
 <template>
   <div class="row square-container m-0 w-100">
-    <template v-if="mode === 'revealActives'">
+    <template v-if="mode === squareState.revealActives">
       <div class="col-4 square active">
         <a href="#" class="square__link"></a>
       </div>
@@ -18,13 +18,13 @@
       <div class="col-4 square"><a href="#" class="square__link"></a></div>
     </template>
 
-    <template v-else-if="mode === 'showWord'">
+    <template v-else-if="mode === squareState.showWord">
       <div class="col-12 d-flex justify-content-center align-items-center">
         <h1>XYZ</h1>
       </div>
     </template>
 
-    <template v-if="mode === 'answeringSquare'">
+    <template v-if="mode === squareState.answeringSquare">
       <div class="col-4 square">
         <a @click="$emit('answer-right')" href="#" class="square__link"></a>
       </div>
@@ -56,19 +56,19 @@
       </div>
     </template>
 
-    <template v-else-if="mode === 'answeringWord'">
+    <template v-else-if="mode === squareState.answeringWord">
       <div class="col-12 d-flex justify-content-center align-items-center">
         <h1>Which word was presented ?</h1>
       </div>
     </template>
 
-    <template v-else-if="mode === 'rightAnswer'">
+    <template v-else-if="mode === squareState.rightAnswer">
       <div class="col-12 d-flex justify-content-center align-items-center">
         <h1>Great!, you are scored {{ score }}</h1>
       </div>
     </template>
 
-    <template v-else-if="mode === 'wrongAnswer'">
+    <template v-else-if="mode === squareState.wrongAnswer">
       <div class="col-12 d-flex justify-content-center align-items-center">
         <h1>You scored: {{ score }}</h1>
       </div>
@@ -78,10 +78,13 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import { Mode } from "../models/mode";
 
 @Component
 export default class Squares extends Vue {
-  @Prop() mode!: string;
+  squareState = Mode;
+
+  @Prop() mode!: Mode;
   @Prop() score!: number;
 }
 </script>
