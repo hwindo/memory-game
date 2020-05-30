@@ -52,7 +52,7 @@ export default class GameBrain {
   public addSquare(num: number) {
     if (this.selectedSquares.includes(num)) {
       this.selectedSquares.splice(this.selectedSquares.indexOf(num), 1);
-    } else {
+    } else if (this.canSelectSquare()) {
       this.selectedSquares.push(num);
     }
     console.log(this.selectedSquares);
@@ -70,5 +70,9 @@ export default class GameBrain {
 
   public getSelectedSquareLength() {
       return this.selectedSquares.length;
+  }
+
+  public canSelectSquare() {
+      return this.selectedSquares.length < this.games[this.currentGame].highlightedSquares.length;
   }
 }

@@ -7,6 +7,7 @@
           :class="squareClass"
           :is-highlighted="isHighlighted(index)"
           :draw-initial-active="drawInitialActive"
+          :can-select-square="canSelectSquare"
           @square-clicked="squareClicked(index)"
         ></Square>
       </template>
@@ -25,6 +26,7 @@
           :class="squareClass"
           :is-highlighted="isHighlighted(index)"
           :draw-initial-active="drawInitialActive"
+          :can-select-square="canSelectSquare"
           @square-clicked="squareClicked(index)"
         ></Square>
       </template>
@@ -94,6 +96,9 @@ export default class Squares extends Vue {
   get squareClass(): string {
     return `col-${this.column} square`;
   }
+  get canSelectSquare() {
+    return this.gameBrain.canSelectSquare();
+  }
   squareClicked(index: number) {
     console.log(`squareClicked ${index}`);
     this.gameBrain.addSquare(index);
@@ -107,27 +112,5 @@ export default class Squares extends Vue {
   border-radius: 1rem;
   overflow: hidden;
   border: 1px solid;
-}
-
-.square {
-  display: block;
-  min-width: 50px;
-  min-height: 12.5vw;
-  border: 1px solid black;
-  padding: 0 !important;
-
-  &__link {
-    display: block;
-    width: 100%;
-    height: 100%;
-
-    .active & {
-      background-color: lightgreen;
-    }
-
-    &:hover {
-      background-color: #42b983;
-    }
-  }
 }
 </style>

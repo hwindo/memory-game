@@ -17,13 +17,15 @@
     <template v-else-if="mode === actionState.answeringSquare">
       <div class="actions__instruction-text mb-2">
         Click on the {{ countHighlightedSquare }} square you remember
+        <br>
+        <small>hint: click again to toggle highlight</small>
       </div>
-      <a
+      <button
         href="#"
-        :disabled="disableNextButton"
+        :disabled="disableNext"
         @click="handleSquareCommit"
         class="btn btn-lg btn-success"
-        >Finish</a
+        >Finish</button
       >
     </template>
     <template v-else-if="mode === actionState.answeringWord">
@@ -78,11 +80,8 @@ export default class Actions extends Vue {
     return this.game.highlightedSquares.length;
   }
 
-  get disableNextButton(): boolean {
-    return (
-      this.gameBrain.getSelectedSquareLength() >=
-      this.game.highlightedSquares.length
-    );
+  get disableNext(): boolean {
+    return this.gameBrain.canSelectSquare();
   }
   handleSquareCommit() {
     this.gameBrain.calculateSquare();
