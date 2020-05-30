@@ -24,6 +24,12 @@ export default class GameBrain {
       word: "foo",
       words: ["bar", "xyz", "ghi", "foo"],
     },
+    {
+        numberOfSquares: 36,
+        highlightedSquares: [6, 10, 11, 13, 14, 18, 19, 20, 22],
+        word: "Hello",
+        words: ["Hello", "World", "Twelve", "Person"],
+      },
   ];
 
   private constructor() {

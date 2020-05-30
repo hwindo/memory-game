@@ -109,7 +109,7 @@ export default class Squares extends Vue {
 .square-container {
   flex-grow: 4;
   border-radius: 1rem;
-  overflow: hidden;
+  overflow: visible;
   border: 1px solid;
 }
 </style>
