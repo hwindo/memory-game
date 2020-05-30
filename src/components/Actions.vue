@@ -57,7 +57,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { Mode } from "../models/Konstants";
+import { Mode } from "../Konstants";
 
 @Component
 export default class Actions extends Vue {
@@ -68,6 +68,7 @@ export default class Actions extends Vue {
 
 <style lang="scss">
 .actions {
+  flex: 2;
   display: flex;
   width: 61.8%;
   flex-direction: column;

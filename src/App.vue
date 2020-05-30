@@ -13,6 +13,7 @@
           </div>
         </div>
         <Squares
+          :game="game"
           :score="score"
           :mode="mode"
           v-on:answer-right="handleAnswerRight"
@@ -31,10 +32,11 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { default as GameBrain, Game } from "./models/GameBrain";
 import LaunchScreen from "./components/LaunchScreen.vue";
 import Squares from "./components/Squares.vue";
 import Actions from "./components/Actions.vue";
-import { Mode } from "./models/Konstants";
+import { Mode } from "./Konstants";
 
 @Component({
   components: {
@@ -46,6 +48,7 @@ import { Mode } from "./models/Konstants";
 export default class App extends Vue {
   mode = Mode.revealActives;
   appState = Mode;
+  gameNumber = 0;
   score = 0;
   launchScreen = true;
 
@@ -53,6 +56,11 @@ export default class App extends Vue {
     setTimeout(() => {
       this.launchScreen = false;
     }, 1618);
+    // window.GameBrain = this.GameBrain;
+  }
+
+  get game(): Game {
+    return GameBrain.games[this.gameNumber];
   }
 
   handleNext(): void {

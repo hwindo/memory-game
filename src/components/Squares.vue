@@ -78,12 +78,13 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { Mode } from "../models/Konstants";
+import { Mode } from "../Konstants";
+import { Game } from "../models/GameBrain";
 
 @Component
 export default class Squares extends Vue {
   squareState = Mode;
-
+  @Prop() game!: Game;
   @Prop() mode!: Mode;
   @Prop() score!: number;
 }
