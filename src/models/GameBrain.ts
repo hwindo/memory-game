@@ -64,7 +64,6 @@ export default class GameBrain {
     } else if (this.canSelectSquare()) {
       this.selectedSquares.push(num);
     }
-    console.log(this.selectedSquares);
   }
 
   public calculateSquare() {
@@ -75,7 +74,6 @@ export default class GameBrain {
         this.incrementScore();
       }
     });
-    console.log(this.score);
   }
 
   public getSelectedSquareLength() {
@@ -99,7 +97,6 @@ export default class GameBrain {
   public incrementLevel() {
     this.currentGameNumber += 1;
     this.selectedSquares = [];
-    console.log("you are now in level:", this.currentGameNumber);
   }
 
   public nextLevel():boolean {

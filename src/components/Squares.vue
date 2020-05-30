@@ -1,5 +1,5 @@
 <template>
-  <div class="row square-container m-0 w-100">
+  <div class="row square-container m-0 w-100 text-center">
     <template v-if="mode === squareState.revealActives">
       <template v-for="(n, index) in game.numberOfSquares">
         <Square
@@ -100,7 +100,6 @@ export default class Squares extends Vue {
     return this.gameBrain.canSelectSquare();
   }
   squareClicked(index: number) {
-    console.log(`squareClicked ${index}`);
     this.gameBrain.addSquare(index);
   }
 }

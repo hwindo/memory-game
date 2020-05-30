@@ -91,14 +91,10 @@ export default class App extends Vue {
   }
 
   handleWordSelect(word: string) {
-    console.log('word-select:', word);
     this.gameBrain.calculateWord(word, (wordIsRight: boolean) => {
       if (wordIsRight && this.nextLevel) {
-        console.log(wordIsRight);
-        console.log(this.nextLevel);
         this.mode = this.appState.rightAnswer;
       } else {
-        console.log("WRONG answer");
         this.mode = this.appState.finalScore;
       }
     });
