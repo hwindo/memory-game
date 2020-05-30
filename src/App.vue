@@ -12,19 +12,12 @@
             </div>
           </div>
         </div>
-        <Squares
-          :game="game"
-          :mode="mode"
-          :score="score"
-          v-on:answer-right="handleAnswerRight"
-          v-on:answer-wrong="handleAnswerWrong"
-        ></Squares>
+        <Squares :game="game" :mode="mode" :score="score"></Squares>
         <Actions
           :game="game"
           :mode="mode"
           v-on:next="handleNext"
-          v-on:answer-right="handleAnswerRight"
-          v-on:answer-wrong="handleAnswerWrong"
+          v-on:word-select="handleWordSelect"
         ></Actions>
       </div>
     </template>
@@ -43,13 +36,12 @@ import { Mode } from "./Konstants";
   components: {
     LaunchScreen,
     Squares,
-    Actions
-  }
+    Actions,
+  },
 })
 export default class App extends Vue {
   mode = Mode.revealActives;
   appState = Mode;
-  gameNumber = 0;
   launchScreen = true;
   gameBrain = GameBrain.getInstance();
 
@@ -60,11 +52,15 @@ export default class App extends Vue {
   }
 
   get game(): Game {
-    return this.gameBrain.games[this.gameNumber];
+    return this.gameBrain.currentGame();
   }
 
   get score(): number {
     return this.gameBrain.getScore();
+  }
+
+  get nextLevel(): boolean {
+    return this.gameBrain.nextLevel();
   }
 
   handleNext(): void {
@@ -78,23 +74,34 @@ export default class App extends Vue {
       case this.appState.answeringSquare:
         this.mode = this.appState.answeringWord;
         break;
-      case this.appState.answeringWord:
-        this.mode = this.appState.rightAnswer;
+      case this.appState.rightAnswer:
+        if (this.nextLevel) {
+          this.mode = this.appState.revealActives;
+        } else {
+          this.mode = this.appState.finalScore;
+        }
+        break;
+      case this.appState.finalScore:
+        this.gameBrain.reset();
+        this.mode = this.appState.revealActives;
         break;
       default:
         this.mode = this.appState.revealActives;
-        break;
     }
   }
 
-  handleAnswerRight() {
-    this.handleNext();
-    console.log("Right Answer!");
-  }
-
-  handleAnswerWrong() {
-    this.handleNext();
-    console.log("Wrong answer!");
+  handleWordSelect(word: string) {
+    console.log('word-select:', word);
+    this.gameBrain.calculateWord(word, (wordIsRight: boolean) => {
+      if (wordIsRight && this.nextLevel) {
+        console.log(wordIsRight);
+        console.log(this.nextLevel);
+        this.mode = this.appState.rightAnswer;
+      } else {
+        console.log("WRONG answer");
+        this.mode = this.appState.finalScore;
+      }
+    });
   }
 }
 </script>

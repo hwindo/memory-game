@@ -40,11 +40,11 @@
 
     <template v-else-if="mode === squareState.rightAnswer">
       <div class="col-12 d-flex justify-content-center align-items-center">
-        <h1>Great!, you are scored {{ score }}</h1>
+        <h1>Great!, You just cleared this level</h1>
       </div>
     </template>
 
-    <template v-else-if="mode === squareState.wrongAnswer">
+    <template v-else-if="mode === squareState.finalScore">
       <div class="col-12 d-flex justify-content-center align-items-center">
         <h1>You scored: {{ score }}</h1>
       </div>

@@ -4,5 +4,5 @@ export enum Mode {
     answeringSquare,
     answeringWord,
     rightAnswer,
-    wrongAnswer,
+    finalScore
 }

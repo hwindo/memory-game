@@ -17,7 +17,7 @@
     <template v-else-if="mode === actionState.answeringSquare">
       <div class="actions__instruction-text mb-2">
         Click on the {{ countHighlightedSquare }} square you remember
-        <br>
+        <br />
         <small>hint: click again to toggle highlight</small>
       </div>
       <button
@@ -25,39 +25,32 @@
         :disabled="disableNext"
         @click="handleSquareCommit"
         class="btn btn-lg btn-success"
-        >Finish</button
       >
+        Finish
+      </button>
     </template>
     <template v-else-if="mode === actionState.answeringWord">
       <div class="actions__instruction-text mb-2"></div>
-      <a
-        href="#"
-        @click="$emit('answer-wrong')"
-        class="btn btn-lg mt-4 mb-3 btn-block btn-warning"
-        >ABC</a
-      >
-      <a
-        href="#"
-        @click="$emit('answer-right')"
-        class="btn btn-lg mb-3 btn-block btn-info"
-        >XYZ</a
-      >
-      <a
-        href="#"
-        @click="$emit('answer-wrong')"
-        class="btn btn-lg mb-3 btn-block btn-success"
-        >GHI</a
-      >
-      <a
-        href="#"
-        @click="$emit('answer-wrong')"
-        class="btn btn-lg mb-3 btn-block btn-primary"
-        >KUM</a
-      >
+      <template v-for="(word, index) in game.words">
+        <a
+          href="#"
+          :key="index"
+          @click="handleWordSelect(word)"
+          :class="buttonClass(index)"
+          >{{ word }}</a
+        >
+      </template>
     </template>
     <template v-else-if="mode === actionState.rightAnswer">
+      <div class="actions__instruction-text mb-2">Next Level</div>
+      <a href="#" @click="$emit('next')" class="btn btn-lg btn-primary"
+        >Let's Go</a
+      >
+    </template>
+
+    <template v-else-if="mode === actionState.finalScore">
       <div class="actions__instruction-text mb-2">Let's Play Again</div>
-      <a href="#" @click="$emit('next')" class="btn btn-lg btn-outline-primary"
+      <a href="#" @click="$emit('next')" class="btn btn-lg btn-primary"
         >Play Again</a
       >
     </template>
@@ -87,6 +80,27 @@ export default class Actions extends Vue {
     this.gameBrain.calculateSquare();
     this.$emit("next");
   }
+  buttonClass(index: number) {
+    let color: string;
+    switch (index) {
+      case 0:
+        color = "warning";
+        break;
+      case 1:
+        color = "info";
+        break;
+      case 2:
+        color = "success";
+        break;
+      default:
+        color = "primary";
+    }
+    return `btn btn-lg font-lg mt-4 mb-3 btn-block btn-${color}`;
+  }
+  handleWordSelect(word: string) {
+    // code
+    this.$emit('word-select', word);
+  }
 }
 </script>
 
@@ -103,5 +117,8 @@ export default class Actions extends Vue {
   &__instruction-text {
     font-size: 1.618rem;
   }
+}
+.btn-lg {
+  font-size: 3.618rem;
 }
 </style>

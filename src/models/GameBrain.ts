@@ -8,7 +8,7 @@ export interface Game {
 export default class GameBrain {
   private static instance: GameBrain;
   private score: number;
-  private currentGame: number;
+  private currentGameNumber: number;
   private oneScoreValue: number;
   private selectedSquares: number[] = [];
   games: Game[] = [
@@ -28,14 +28,15 @@ export default class GameBrain {
 
   private constructor() {
     this.score = 0;
-    this.currentGame = 0;
+    this.currentGameNumber = 0;
     this.oneScoreValue = 100;
   }
 
   public reset() {
     this.score = 0;
-    this.currentGame = 0;
+    this.currentGameNumber = 0;
     this.oneScoreValue = 100;
+    this.selectedSquares = [];
   }
 
   public static getInstance(): GameBrain {
@@ -45,8 +46,16 @@ export default class GameBrain {
     return GameBrain.instance;
   }
 
+  public currentGame(): Game {
+      return this.games[this.currentGameNumber];
+  }
+
   public getScore() {
       return this.score;
+  }
+
+  private incrementScore() {
+      this.score += this.oneScoreValue;
   }
 
   public addSquare(num: number) {
@@ -57,12 +66,13 @@ export default class GameBrain {
     }
     console.log(this.selectedSquares);
   }
+
   public calculateSquare() {
-    const rightSquares: number[] = this.games[this.currentGame]
+    const rightSquares: number[] = this.games[this.currentGameNumber]
       .highlightedSquares;
     this.selectedSquares.forEach((squareNum) => {
       if (rightSquares.includes(squareNum)) {
-        this.score += this.oneScoreValue;
+        this.incrementScore();
       }
     });
     console.log(this.score);
@@ -73,6 +83,26 @@ export default class GameBrain {
   }
 
   public canSelectSquare() {
-      return this.selectedSquares.length < this.games[this.currentGame].highlightedSquares.length;
+      return this.selectedSquares.length < this.games[this.currentGameNumber].highlightedSquares.length;
+  }
+
+  public calculateWord(word: string, callback: (result: boolean) => void) {
+    if (this.games[this.currentGameNumber].word === word) {
+        this.incrementScore();
+        this.incrementLevel();
+        callback(true);
+    } else {
+        callback(false);
+    }
+  }
+
+  public incrementLevel() {
+    this.currentGameNumber += 1;
+    this.selectedSquares = [];
+    console.log("you are now in level:", this.currentGameNumber);
+  }
+
+  public nextLevel():boolean {
+    return this.currentGameNumber < this.games.length;
   }
 }
