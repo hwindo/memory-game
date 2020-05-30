@@ -15,7 +15,7 @@
       >
     </template>
     <template v-else-if="mode === actionState.answeringSquare">
-      <div class="actions__instruction-text mb-2">
+      <div class="actions__instruction-text mb-1">
         Click on the {{ countHighlightedSquare }} square you remember
         <br />
         <small>hint: click again to toggle highlight</small>
@@ -30,7 +30,7 @@
       </button>
     </template>
     <template v-else-if="mode === actionState.answeringWord">
-      <div class="actions__instruction-text mb-2"></div>
+      <div class="actions__instruction-text mb-1"></div>
       <template v-for="(word, index) in game.words">
         <a
           href="#"
@@ -95,7 +95,7 @@ export default class Actions extends Vue {
       default:
         color = "primary";
     }
-    return `btn btn-lg font-lg mt-4 mb-3 btn-block btn-${color}`;
+    return `btn btn-lg font-lg mb-1 btn-block btn-${color}`;
   }
   handleWordSelect(word: string) {
     // code
@@ -106,7 +106,7 @@ export default class Actions extends Vue {
 
 <style lang="scss">
 .actions {
-  flex: 2;
+  flex: 4;
   display: flex;
   width: 61.8%;
   flex-direction: column;
