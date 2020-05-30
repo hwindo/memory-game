@@ -40,8 +40,8 @@ import { Mode } from "./models/mode";
   components: {
     LaunchScreen,
     Squares,
-    Actions,
-  },
+    Actions
+  }
 })
 export default class App extends Vue {
   mode = Mode.revealActives;
