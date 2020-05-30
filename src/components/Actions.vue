@@ -18,7 +18,11 @@
       <div class="actions__instruction-text mb-2">
         Click on the {{ countHighlightedSquare }} square you remember
       </div>
-      <a href="#" :disabled="disableNextButton" @click="handleSquareCommit" class="btn btn-lg btn-success"
+      <a
+        href="#"
+        :disabled="disableNextButton"
+        @click="handleSquareCommit"
+        class="btn btn-lg btn-success"
         >Finish</a
       >
     </template>
@@ -66,6 +70,7 @@ import { default as GameBrain, Game } from "../models/GameBrain";
 @Component
 export default class Actions extends Vue {
   actionState = Mode;
+  gameBrain = GameBrain.getInstance();
   @Prop() mode!: Mode;
   @Prop() game!: Game;
 
@@ -75,12 +80,13 @@ export default class Actions extends Vue {
 
   get disableNextButton(): boolean {
     return (
-      GameBrain.selectedSquares.length >= this.game.highlightedSquares.length
+      this.gameBrain.getSelectedSquareLength() >=
+      this.game.highlightedSquares.length
     );
   }
   handleSquareCommit() {
-    GameBrain.calculateSquare();
-    this.$emit('next');
+    this.gameBrain.calculateSquare();
+    this.$emit("next");
   }
 }
 </script>

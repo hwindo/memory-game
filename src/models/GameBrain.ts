@@ -6,10 +6,12 @@ export interface Game {
 }
 
 export default class GameBrain {
-  static score = 0;
-  static oneScoreValue = 100;
-  static currentGame = 0;
-  static games: Game[] = [
+  private static instance: GameBrain;
+  private score: number;
+  private currentGame: number;
+  private oneScoreValue: number;
+  private selectedSquares: number[] = [];
+  games: Game[] = [
     {
       numberOfSquares: 9,
       highlightedSquares: [0, 4, 6],
@@ -23,23 +25,50 @@ export default class GameBrain {
       words: ["bar", "xyz", "ghi", "foo"],
     },
   ];
-  static addSquare(num: number) {
+
+  private constructor() {
+    this.score = 0;
+    this.currentGame = 0;
+    this.oneScoreValue = 100;
+  }
+
+  public reset() {
+    this.score = 0;
+    this.currentGame = 0;
+    this.oneScoreValue = 100;
+  }
+
+  public static getInstance(): GameBrain {
+    if (!GameBrain.instance) {
+      GameBrain.instance = new GameBrain();
+    }
+    return GameBrain.instance;
+  }
+
+  public getScore() {
+      return this.score;
+  }
+
+  public addSquare(num: number) {
     if (this.selectedSquares.includes(num)) {
       this.selectedSquares.splice(this.selectedSquares.indexOf(num), 1);
     } else {
-      GameBrain.selectedSquares.push(num);
+      this.selectedSquares.push(num);
     }
     console.log(this.selectedSquares);
   }
-  static calculateSquare() {
-    const rightSquares: number[] =
-      GameBrain.games[GameBrain.currentGame].highlightedSquares;
-    GameBrain.selectedSquares.forEach((squareNum) => {
+  public calculateSquare() {
+    const rightSquares: number[] = this.games[this.currentGame]
+      .highlightedSquares;
+    this.selectedSquares.forEach((squareNum) => {
       if (rightSquares.includes(squareNum)) {
-        GameBrain.score += GameBrain.oneScoreValue;
+        this.score += this.oneScoreValue;
       }
     });
-    console.log(GameBrain.score);
+    console.log(this.score);
   }
-  static selectedSquares: number[] = [];
+
+  public getSelectedSquareLength() {
+      return this.selectedSquares.length;
+  }
 }

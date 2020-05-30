@@ -58,11 +58,12 @@ import Square from "./Square.vue";
 
 @Component({
   components: {
-    Square,
-  },
+    Square
+  }
 })
 export default class Squares extends Vue {
   squareState = Mode;
+  gameBrain = GameBrain.getInstance();
   @Prop() game!: Game;
   @Prop() mode!: Mode;
   @Prop() score!: number;
@@ -95,7 +96,7 @@ export default class Squares extends Vue {
   }
   squareClicked(index: number) {
     console.log(`squareClicked ${index}`);
-    GameBrain.addSquare(index);
+    this.gameBrain.addSquare(index);
   }
 }
 </script>

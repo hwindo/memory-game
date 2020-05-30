@@ -49,9 +49,9 @@ import { Mode } from "./Konstants";
 export default class App extends Vue {
   mode = Mode.revealActives;
   appState = Mode;
-  score = 0;
   gameNumber = 0;
   launchScreen = true;
+  gameBrain = GameBrain.getInstance();
 
   mounted() {
     setTimeout(() => {
@@ -60,11 +60,14 @@ export default class App extends Vue {
   }
 
   get game(): Game {
-    return GameBrain.games[this.gameNumber];
+    return this.gameBrain.games[this.gameNumber];
+  }
+
+  get score(): number {
+    return this.gameBrain.getScore();
   }
 
   handleNext(): void {
-    this.updateScore();
     switch (this.mode) {
       case this.appState.revealActives:
         this.mode = this.appState.showWord;
@@ -92,10 +95,6 @@ export default class App extends Vue {
   handleAnswerWrong() {
     this.handleNext();
     console.log("Wrong answer!");
-  }
-
-  updateScore() {
-    this.score = GameBrain.score;
   }
 }
 </script>
