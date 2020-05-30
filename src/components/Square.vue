@@ -19,10 +19,10 @@ export default class Square extends Vue {
     }
   }
   handleClicked() {
-    if (
-      (!this.drawInitialActive && this.canSelectSquare) ||
-      this.squareClass === "active"
-    ) {
+    if (this.drawInitialActive) {
+      return;
+    }
+    if (this.canSelectSquare || this.squareClass === "active") {
       this.squareClass = this.squareClass === "active" ? "" : "active";
       this.$emit("square-clicked");
     }
