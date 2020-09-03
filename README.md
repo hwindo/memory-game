@@ -1,4 +1,9 @@
 # memory-game
+Game Prototype
+
+![Memory-Game Demo Gif](./assets/memory-game.gif)
+
+![Memory-Gaem Demo Screenshot](./assets/memory-game.png)
 
 ## Project setup
 ```
